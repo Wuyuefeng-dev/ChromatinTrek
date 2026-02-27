@@ -1,0 +1,17 @@
+# ChromatinTrek Sample Sheet
+# ──────────────────────────────────────────────────────────────────────────────
+# Tab-separated. Lines starting with # are ignored.
+# Columns:
+#   sample      Unique sample name (no spaces)
+#   fastq_r1    Path to R1 FASTQ (gzipped or plain)
+#   fastq_r2    Path to R2 FASTQ  (leave empty for single-end)
+#   group       Biological group label (e.g. WT, KO, treated, control)
+#   comparison  Comparison identifier matching config.yaml comparisons list
+#               Use "treatment_vs_control" format; leave blank if not in a comparison
+#
+# Example (ATAC-seq):
+sample	fastq_r1	fastq_r2	group	comparison
+WT_rep1	data/raw/WT_rep1_R1.fastq.gz	data/raw/WT_rep1_R2.fastq.gz	WT	KO_vs_WT
+WT_rep2	data/raw/WT_rep2_R1.fastq.gz	data/raw/WT_rep2_R2.fastq.gz	WT	KO_vs_WT
+KO_rep1	data/raw/KO_rep1_R1.fastq.gz	data/raw/KO_rep1_R2.fastq.gz	KO	KO_vs_WT
+KO_rep2	data/raw/KO_rep2_R1.fastq.gz	data/raw/KO_rep2_R2.fastq.gz	KO	KO_vs_WT

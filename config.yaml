@@ -1,0 +1,48 @@
+# =============================================================================
+# ChromatinTrek – User Configuration
+# =============================================================================
+# ✏️  ONLY EDIT THIS SECTION – everything else is set automatically.
+# =============================================================================
+
+# ── 1. Species ────────────────────────────────────────────────────────────────
+#   human  →  genome hg38, GO organism "Human",  HOMER genome "hg38"
+#   mouse  →  genome mm10, GO organism "Mouse",  HOMER genome "mm10"
+species: "human"        # "human" | "mouse"
+
+# ── 2. Assay type ─────────────────────────────────────────────────────────────
+assay: "atac"           # "atac" | "chip" | "cuttag"
+
+# ── 3. Sample sheet ───────────────────────────────────────────────────────────
+#   See samples.tsv for the required format:
+#     sample  fastq_r1  fastq_r2  group  comparison
+#   • fastq_r2  : leave empty for single-end
+#   • group     : e.g. "WT", "KO" – used to name outputs
+#   • comparison: e.g. "KO_vs_WT" – drives differential peak analysis
+sample_sheet: "samples.tsv"
+
+# ── 4. Comparison groups ──────────────────────────────────────────────────────
+#   List of "treatment_vs_control" identifiers that match the
+#   'comparison' column in samples.tsv. Keep blank ([]) to skip diff peaks.
+comparisons:
+  - "KO_vs_WT"
+
+# =============================================================================
+# ⚙️  ADVANCED – only change if you know what you are doing
+# =============================================================================
+
+# Genome paths are auto-resolved from $CONDA_PREFIX/share/chromatintrek/genomes/
+# Run `chromatintrek setup-genome --species human` to download them.
+genome_dir: ""          # Leave blank to use auto-resolved path
+
+# SLURM account/partition  (only needed when running with --slurm)
+slurm_account: ""       # e.g. "pi_yourlab"
+slurm_partition: "short"
+
+# Peak calling q-value cutoff
+qvalue: 0.05
+
+# Minimum MAPQ for alignment filtering
+mapq: 30
+
+# Extra Trim Galore options (e.g. "--clip_R1 10")
+trim_extra: ""
