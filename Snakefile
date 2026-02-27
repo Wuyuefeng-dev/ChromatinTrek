@@ -51,8 +51,11 @@ rule all:
         expand(f"{PEAK_DIR}/{{sample}}/{{sample}}_peaks.narrowPeak", sample=SAMPLES),
         # BigWigs
         expand(f"{BW_DIR}/{{sample}}.bw", sample=SAMPLES),
-        # Peak heatmaps
+        # Peak heatmaps (peak centered and TSS centered)
         expand(f"{MATRIX_DIR}/{{sample}}_heatmap.png", sample=SAMPLES),
+        expand(f"{MATRIX_DIR}/{{sample}}_profile.png", sample=SAMPLES),
+        expand(f"{MATRIX_DIR}/{{sample}}_tss_heatmap.png", sample=SAMPLES),
+        expand(f"{MATRIX_DIR}/{{sample}}_tss_profile.png", sample=SAMPLES),
         # Motif enrichment
         expand(f"{MOTIF_DIR}/{{sample}}/knownResults.txt", sample=SAMPLES),
         # Peak-gene annotation

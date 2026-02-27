@@ -10,16 +10,15 @@ dependencies:
   - pip
 
   # ── Core bioinformatics tools ────────────────────────────────────────────
-  - fastqc=0.12.1
-  - trim-galore=0.6.10
-  - bowtie2=2.5.3
-  - samtools=1.19.2
-  - picard=3.1.1
-  - bedtools=2.31.1
-  - macs3=3.0.1
-  - homer=4.11
-  - deeptools=3.5.4
-  - multiqc=1.20
+  - fastqc
+  - trim-galore
+  - bowtie2
+  - samtools
+  - picard
+  - bedtools
+  - homer
+  - deeptools
+  - multiqc
   - ucsc-bedclip
   - ucsc-bedgraphtobigwig
   - ucsc-fetchchromsizes

@@ -31,15 +31,27 @@ rule peak_gene_stats:
         slurm_account=lambda wc: CFG.get("slurm_account",""),
     run:
         import pandas as pd
-        from chromatintrek.peak_gene import parse_annotation_column, plot_genomic_annotation
+        from chromatintrek.peak_gene import parse_annotation_column, plot_genomic_annotation, plot_tss_distance
         df = pd.read_csv(input.tsv, sep="\t")
         df.columns = [c.strip() for c in df.columns]
         if "Annotation" in df.columns:
             df["annotation_class"] = parse_annotation_column(df["Annotation"])
         else:
             df["annotation_class"] = "Intergenic"
+            
+        # 1. ChIPseeker equivalent: plotAnnoBar
         plot_genomic_annotation(
             {params.sample: df},
             annotation_col="annotation_class",
             out_png=output.png,
         )
+        # 2. ChIPseeker equivalent: plotDistToTSS
+        dist_col = next((c for c in df.columns if "distance" in c.lower() and "tss" in c.lower()), None)
+        if dist_col:
+            plot_tss_distance(
+                df, distance_col=dist_col,
+                out_png=output.tss_png,
+                title=f"{params.sample} Distance to TSS",
+            )
+        else:
+            open(output.tss_png, "w").close()

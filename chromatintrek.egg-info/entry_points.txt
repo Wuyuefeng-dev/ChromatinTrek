@@ -1,0 +1,2 @@
+[console_scripts]
+chromatintrek = chromatintrek.cli:main
