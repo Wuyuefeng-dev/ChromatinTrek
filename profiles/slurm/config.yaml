@@ -1,0 +1,34 @@
+# Snakemake SLURM executor profile for ChromatinTrek
+# ─────────────────────────────────────────────────────────────────────────────
+# Usage:  snakemake --executor slurm --profile profiles/slurm
+#         OR via CLI: chromatintrek run --config config.yaml --slurm
+# ─────────────────────────────────────────────────────────────────────────────
+
+executor: slurm
+
+# Maximum number of concurrent SLURM jobs
+jobs: 200
+
+# Snakemake behaviour
+rerun-incomplete: true
+keep-going: true
+printshellcmds: true
+latency-wait: 60
+
+# ── Default per-job resources ─────────────────────────────────────────────────
+# These are overridden per-rule via the `resources:` block in each .smk file.
+default-resources:
+  slurm_partition:  short
+  slurm_account:    ""            # Filled from config.yaml slurm_account
+  mem_mb:           16000
+  cpus_per_task:    4
+  runtime:          "02:00:00"   # HH:MM:SS
+
+# ── Submit / status scripts ───────────────────────────────────────────────────
+# snakemake-executor-plugin-slurm handles these automatically.
+# Uncomment and point to custom scripts only if your HPC needs special handling.
+# cluster-status: "scripts/slurm_status.py"
+
+# ── Temporary directory ───────────────────────────────────────────────────────
+# Point to a fast local scratch if available on your cluster nodes.
+# shadow-prefix: "/scratch/$USER"

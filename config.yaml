@@ -1,47 +1,57 @@
 # =============================================================================
 # ChromatinTrek – User Configuration
 # =============================================================================
-# ✏️  ONLY EDIT THIS SECTION – everything else is set automatically.
+# ✏️  FILL IN THE "USER INPUTS" SECTION BELOW – everything else is optional.
 # =============================================================================
 
 # ── 1. Species ────────────────────────────────────────────────────────────────
-#   human  →  genome hg38, GO organism "Human",  HOMER genome "hg38"
-#   mouse  →  genome mm10, GO organism "Mouse",  HOMER genome "mm10"
+#   human  →  hg38, GO organism "Human", HOMER genome "hg38"
+#   mouse  →  mm10, GO organism "Mouse", HOMER genome "mm10"
 species: "human"        # "human" | "mouse"
 
 # ── 2. Assay type ─────────────────────────────────────────────────────────────
 assay: "atac"           # "atac" | "chip" | "cuttag"
 
 # ── 3. Sample sheet ───────────────────────────────────────────────────────────
-#   See samples.tsv for the required format:
-#     sample  fastq_r1  fastq_r2  group  comparison
-#   • fastq_r2  : leave empty for single-end
-#   • group     : e.g. "WT", "KO" – used to name outputs
-#   • comparison: e.g. "KO_vs_WT" – drives differential peak analysis
+#   See samples.tsv – columns: sample  fastq_r1  fastq_r2  group  comparison
 sample_sheet: "samples.tsv"
 
 # ── 4. Comparison groups ──────────────────────────────────────────────────────
-#   List of "treatment_vs_control" identifiers that match the
-#   'comparison' column in samples.tsv. Keep blank ([]) to skip diff peaks.
+#   Matches the 'comparison' column in samples.tsv (treatment_vs_control format)
 comparisons:
   - "KO_vs_WT"
 
 # =============================================================================
-# ⚙️  ADVANCED – only change if you know what you are doing
+# ── 5. Reference genome (optional but recommended) ────────────────────────────
+#   If you already have a genome FASTA and/or a pre-built Bowtie2 index,
+#   provide the paths below. The pipeline will SKIP downloading/building them.
+#   Leave a field empty ("") to use the auto-managed paths under genome_dir.
+# =============================================================================
+genome_fasta:    ""     # /path/to/hg38.fa  or  /path/to/hg38.fa.gz
+bowtie2_index:   ""     # /path/to/bowtie2/index/hg38  (prefix, no extension)
+
+# These are also optional overrides – leave empty to auto-resolve:
+chromosome_sizes: ""    # /path/to/hg38.chrom.sizes
+blacklist:        ""    # /path/to/hg38-blacklist.v2.bed
+gtf:              ""    # /path/to/gencode.v44.annotation.gtf.gz
+tss_bed:          ""    # /path/to/hg38_tss.bed
+
+# =============================================================================
+# ⚙️  ADVANCED – change only if needed
 # =============================================================================
 
-# Genome paths are auto-resolved from $CONDA_PREFIX/share/chromatintrek/genomes/
-# Run `chromatintrek setup-genome --species human` to download them.
-genome_dir: ""          # Leave blank to use auto-resolved path
+# Directory where chromatintrek downloads/stores genome files automatically.
+# Defaults to $CONDA_PREFIX/share/chromatintrek/genomes/<genome>/
+genome_dir: ""
 
-# SLURM account/partition  (only needed when running with --slurm)
-slurm_account: ""       # e.g. "pi_yourlab"
-slurm_partition: "short"
+# SLURM account/partition (only when running with --slurm)
+slurm_account:    ""       # e.g. "pi_yourlab"
+slurm_partition:  "short"
 
 # Peak calling q-value cutoff
 qvalue: 0.05
 
-# Minimum MAPQ for alignment filtering
+# Minimum mapping quality for alignment filtering
 mapq: 30
 
 # Extra Trim Galore options (e.g. "--clip_R1 10")
